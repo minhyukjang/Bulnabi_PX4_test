@@ -1,3 +1,50 @@
+# 불나비 PX4
+본 레포는 불나비의 PX4 개발을 위해 제작되었으며, PX4-AutoPilot의 v1.14.0 버전을 그대로 가져온 것이다.
+~~
+사용을 위해서는, 본 레포를 fork하고(개인 계정으로), fork한 레포를 본인 local computer에 clone한 뒤 작업을 하면 된다.
+작업을 마친 뒤에는 add, commit, push의 과정을 거쳐 본인 계정의 레포에 업로드를 하게 된다.
+업로드 뒤에는 본인 레포에 들어가면 Pull-Request라는 버튼이 활성화 되는데, 이때 리뷰어를 지정해서 올리고, 리뷰어가 ok하면 본인의 작업물을 Bulnabi Repo에 merge하게 된다.
+Git 관련 사항 (Conflict)등은 인터넷에서 스스로 학습하면 좋을 것 같다.
+~~
+#### 개발 환경
+> 1.Ubuntu 20.04  
+> 2. ROS2 foxy
+
+나머지는 시뮬레이션 세미나 ppt 나온 그대로 따라하면 될 것 같다.
+
+### 기본 세팅
+clone이 되어 있다는 가정 하에 Terminal에서 cd Bulnabi_PX4를 통해 Bulnabi_PX4 폴더에 들어와 있는 상태에서 시작.
+
+```
+bash ./Tools/setup/ubuntu.sh
+```
+
+완료되면, 우분투를 로그아웃 한 다음 재접속한다. 이후에는, 시뮬레이션 세미나 ppt 나온 그대로 따라해서,
+
+```
+make px4_sitl gazebo-classic
+```
+같은 명령이 문제 없이 실행될 수 있도록, 기존 px4 문서들 참고해서 기본 세팅을 진행한다.
+
+### 기체에 펌웨어를 업로드 하는 방법
+기존에는 QGround Control을 연결한 뒤, Vehicle Setting -> Firmware에 들어간 뒤, USB를 뺐다가 다시 끼면 Stable한 px4 버전이 자동으로 픽스호크 보드에 업로드가 되었다.
+이제는, Bulnabi_px4를 사용할 것이기 때문에 위 방법 대신 아래와 같은 방법을 사용한다.
+우선
+```
+cd Bulnabi_PX4
+```
+터미널에서 위 명령어를 통해 Bulnabi_PX4 폴더로 이동한다.
+그 뒤에, 픽스호크 보드 제품 버전에 맞는 명령어를 실행한다. https://docs.px4.io/main/en/dev_setup/building_px4.html
+```
+make px4_fmu-v6x_default
+```
+build가 완료되면,
+```
+make px4_fmu-v6x_default upload
+```
+그럼 bootloader 어쩌고라는 말이 뜰 텐데, 그 다음 usb를 뺐다가 끼면 기체에 우리의 Bulnabi_PX4 펌웨어가 업로드되게 된다.
+그 이후는 기존에 QGroundControl 사용 방법과 동일하다. (펌웨어는 이미 업로드했으므로, 그 부분을 제외하고)
+
 # PX4 Drone Autopilot
 
 [![Releases](https://img.shields.io/github/release/PX4/PX4-Autopilot.svg)](https://github.com/PX4/PX4-Autopilot/releases) [![DOI](https://zenodo.org/badge/22634/PX4/PX4-Autopilot.svg)](https://zenodo.org/badge/latestdoi/22634/PX4/PX4-Autopilot)
